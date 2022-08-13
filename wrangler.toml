@@ -1,0 +1,16 @@
+name = "shortify"
+workers_dev = true
+
+main = "build/worker/shim.mjs"
+compatibility_date = "2022-01-20"
+
+kv_namespaces = [
+  { binding = "shortify", id = "895d28b352904e74a42d743c1a71aad2", preview_id = "c950a2cb8a7b4c9885c6be0d24049fbb" },
+]
+account_id = "10587e6bb7932116ebfce0b7c5d0178e"
+
+[vars]
+WORKERS_RS_VERSION = "0.0.9"
+
+[build]
+command = "worker-build --release"
