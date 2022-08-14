@@ -31,7 +31,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
             if let Err(e) = headers.append("Location", &destination) {
                 return html_error(&format!("Location header is invalid: {e}"), 500);
             };
-            Ok(Response::empty()?.with_status(302).with_headers(headers))
+            Ok(Response::ok(r#"<meta property="og:title" content="Shortify" />"#)?.with_status(302).with_headers(headers))
         } else {
             html_error("404 not found", 404)
         }
