@@ -12,5 +12,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 worker = "0.0.12"
+rand = { version = "0.8", features = ["getrandom", "std"] }
+getrandom = { version = "0.2", features = ["js"] }
 tera = { version = "1", default-features = false }
 console_error_panic_hook = "0.1"

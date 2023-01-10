@@ -1,3 +1,4 @@
+use rand::Rng;
 use worker::*;
 
 fn log_request(req: &Request) {
@@ -31,7 +32,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
             let mut headers = Headers::new();
             if let Err(e) = headers.append(
                 "Location",
-                destinations[(js_sys::Math::random() * destinations.len() as f64) as usize],
+                destinations[(rand::thread_rng().gen_range(0..destinations.len())) as usize],
             ) {
                 return html_error(&format!("Location header is invalid: {e}"), 500);
             };
