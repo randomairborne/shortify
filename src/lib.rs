@@ -22,13 +22,17 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
             Err(e) => return html_error(&e.to_string(), 500),
         };
         let path = called_url.path();
-        let maybe_destination = match links.get(path).text().await {
+        let maybe_destinations = match links.get(path).text().await {
             Ok(val) => val,
             Err(e) => return html_error(&e.to_string(), 500),
         };
-        if let Some(destination) = maybe_destination {
+        if let Some(destinations) = maybe_destinations {
+            let destinations: Vec<&str> = destinations.split('|').collect();
             let mut headers = Headers::new();
-            if let Err(e) = headers.append("Location", &destination) {
+            if let Err(e) = headers.append(
+                "Location",
+                destinations[(js_sys::Math::random() * destinations.len() as f64) as usize],
+            ) {
                 return html_error(&format!("Location header is invalid: {e}"), 500);
             };
             Ok(Response::empty()?.with_status(302).with_headers(headers))
